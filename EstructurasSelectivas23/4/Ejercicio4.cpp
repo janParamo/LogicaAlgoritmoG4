@@ -49,7 +49,7 @@ void calcularPagoCompania(int numAlumnos) {
             break;
     }
 
-    cout << "El pago a la compañía de autobuses es: $" << pagoCompania << endl;
+    cout << "El pago a la compania de autobuses es: $" << pagoCompania << endl;
 }
 
 int main() {
@@ -58,7 +58,7 @@ int main() {
     do {
         cout << "\nMenu de opciones:" << endl;
         cout << "1. Calcular costo por alumno" << endl;
-        cout << "2. Calcular pago a la compañia de autobuses" << endl;
+        cout << "2. Calcular pago a la compania de autobuses" << endl;
         cout << "3. Salir" << endl;
         cout << "Seleccione una opcion: ";
         cin >> opcion;
