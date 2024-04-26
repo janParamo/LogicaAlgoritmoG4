@@ -10,7 +10,7 @@ int pos = 0;
 
 void agregarNum(int num);
 int sumar(int suma, int elemAct);
-void menu();
+
 void agregarNum(int num)
 {
     if (pos < MAX)
@@ -22,29 +22,27 @@ void agregarNum(int num)
     }
 }
 
-int sumar(int suma, int elemAct){
+int sumar(int suma, int elemAct)
+{
     if(elemAct == -1){
         return suma;
     }
 
-    suma += nums[elemAct];
-    elemAct--;
+    suma = suma + nums[elemAct];
+    // elemAct--;
     sumar(suma, elemAct -1);
     
 }
 
-main()
-{
-    menu();
-}
 
 void menu()
 {
-    int op, num;
+    int op, num, suma = 0;
 
+    cout << "Elementos guardados: "<< pos << endl;
     cout << "1. Ingresar numero: \n";
-    cout << "2. Sumar. \n";
-    cout << "3. Salir. \n";
+    cout << "2. Sumar \n";
+    cout << "3. Salir \n";
     cout << "Digite su opcion: \n";
     cin >> op;
     switch (op)
@@ -54,10 +52,12 @@ void menu()
         cout << "Dime un numero" << endl;
         cin >> num;
         agregarNum(num);
+        for(int i = 0; i<pos; i++) cout << nums[i] << endl;
         break;
     case 2:
-        cout << "Sumar:" << endl
-        ;
+        cout << "Sumar:" << endl;
+        for(int i = 0; i<pos; i++) cout << nums[i] << endl;
+        cout << "La suma es " << sumar(suma, pos - 1) << endl;
         break;
     case 3:
         cout << "Salir" << endl;
@@ -69,4 +69,9 @@ void menu()
     if(op!=3){
         menu();
     }
+}
+
+main()
+{
+    menu();
 }
