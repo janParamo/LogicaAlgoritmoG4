@@ -15,17 +15,17 @@ main(){
     cout << "Dime la distancia recorrida:";
     cin >> distancia;
 
-    if (distancia <= 500)
+    if (distancia <= 500 && distancia >= 0)
     {
-        alqSin = 30;
-    } else if (distancia <= 1000)
+        alqCon = 30;
+    } else if (distancia <= 1000 && distancia >= 501) 
     {
-        alqSin = (distancia*0.05)+30;
+        alqCon = ((distancia-500)*(30*0.05))+30;
     } else{
-        alqSin = (distancia*0.08)+30;
+        alqCon = ((distancia-1000)*(30*0.08))+30;
     }
     
-    alqCon = alqSin+(alqSin*0.15);
+    alqSin = alqCon-(alqCon*0.15);
 
     cout<< "El monto a pagar sin impuesto es de: $"<<alqSin<<"\n";
     cout<< "El monto a pagar con impuesto es de: $"<<alqCon<<"\n";
