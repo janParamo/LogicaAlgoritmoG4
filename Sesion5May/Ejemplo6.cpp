@@ -6,7 +6,7 @@ using namespace std;
 
 int main()
 {
-    int num, i = 1;
+    int num, i = 0;
     cout << "Dime un numero:";
     cin >> num;
 
@@ -15,6 +15,6 @@ int main()
         cout << num << " x " << i << " = " << num * i << endl;
         i++;
     }
-    
+
     return 0;
 }
