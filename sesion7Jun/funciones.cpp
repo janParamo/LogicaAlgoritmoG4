@@ -14,6 +14,7 @@ CITY findCity(int id);
 int findPos(int id);
 void updateCity(CITY *city, int id);
 void destroyCity(int id);
+
 void pedirDatos();
 void mostrarTodo();
 void editar();
@@ -96,8 +97,17 @@ void principal()
         case 1:
             pedirDatos();
             break;
+        case 2:
+            editar();
+            break;
+        case 3:
+            eliminar();
+            break;
         case 4:
             mostrarTodo();
+            break;
+        case 5:
+            buscar();
             break;
         case 6:
             cout << "Saliendo..." << endl;
@@ -116,9 +126,9 @@ void pedirDatos()
     cout << "ID: ";
     cin >> city.id;
     cout << "Nombre: ";
-    scanf("%[^\n]", city.name);
+    scanf(" %[^\n]", city.name);
     cout << "Descripcion: ";
-    scanf("%[^\n]", city.description);
+    scanf(" %[^\n]", city.description);
     addCity(&city);
 }
 
@@ -135,5 +145,35 @@ void mostrarTodo()
 
 void editar()
 {
-    
+    CITY city;
+    int id;
+    cout << "ID: ";
+    cin >> id;
+    city = findCity(id);
+    cout << "Nombre: ";
+    scanf(" %[^\n]", city.name);
+    cout << "Descripcion: ";
+    scanf(" %[^\n]", city.description);
+    updateCity(&city, id);
+    cout << "Registro actualizado...\n";
+}
+
+void eliminar()
+{
+    int id;
+    cout << "ID: ";
+    cin >> id;
+    destroyCity(id);
+    cout << "Eliminado...\n";
+}
+
+void buscar()
+{
+    int id;
+    cout << "Dime el ID: ";
+    cin >> id;
+    CITY city = findCity(id);
+    cout << "ID: " << city.id << endl;
+    cout << "Nombre: " << city.name << endl;
+    cout << "Descripcion: " << city.description << endl;
 }
