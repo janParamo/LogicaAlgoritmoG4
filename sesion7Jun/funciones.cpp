@@ -1,6 +1,8 @@
 #include <iostream>
 #include "variables.h"
 #include <string.h>
+#include <fstream>
+#include <cstdlib>
 
 using namespace std;
 
@@ -22,6 +24,12 @@ void eliminar();
 void buscar();
 int menu();
 void principal();
+
+// Manejo de archivos
+int loadCities();
+void writeFile(const CITY &city);
+void editFile(const CITY &city, int id);
+void deleteFile();
 
 void addCity(CITY *city)
 {
@@ -89,6 +97,7 @@ int menu()
 void principal()
 {
     int op;
+    pos = loadCities();
     do
     {
         op = menu();
@@ -130,6 +139,7 @@ void pedirDatos()
     cout << "Descripcion: ";
     scanf(" %[^\n]", city.description);
     addCity(&city);
+    writeFile(city);
 }
 
 void mostrarTodo()
@@ -156,6 +166,7 @@ void editar()
     scanf(" %[^\n]", city.description);
     updateCity(&city, id);
     cout << "Registro actualizado...\n";
+    editFile(city, id);
 }
 
 void eliminar()
@@ -165,6 +176,7 @@ void eliminar()
     cin >> id;
     destroyCity(id);
     cout << "Eliminado...\n";
+    deleteFile();
 }
 
 void buscar()
@@ -176,4 +188,94 @@ void buscar()
     cout << "ID: " << city.id << endl;
     cout << "Nombre: " << city.name << endl;
     cout << "Descripcion: " << city.description << endl;
+}
+
+int loadCities()
+{
+    ifstream archivo("cities.txt");
+    if (archivo.fail())
+    {
+        return 0;
+    }
+    int i = 0;
+    while (archivo >> cities[i].id)
+    {
+        archivo.ignore();
+        archivo.getline(cities[i].name, 30);
+        archivo.getline(cities[i].description, 100);
+        i++;
+    }
+    archivo.close();
+    return i;
+}
+void writeFile(const CITY &city)
+{
+    ofstream archivo;
+
+    archivo.open("cities.txt", ios::app);
+
+    if (archivo.fail())
+    {
+        cout << "El arhivo no se pudo abrir" << endl;
+        exit(1);
+    }
+
+    archivo << city.id << endl;
+    archivo << city.name << endl;
+    archivo << city.description << endl;
+    archivo.close();
+}
+
+void editFile(const CITY &city, int id)
+{
+    ifstream archivo("cities.txt");
+    ofstream temp("temp.txt");
+    CITY c;
+    while (archivo >> c.id)
+    {
+        archivo.ignore();
+        archivo.getline(c.name, 30);
+        archivo.getline(c.description, 100);
+        if (c.id == id)
+        {
+            temp << city.id << endl;
+            temp << city.name << endl;
+            temp << city.description << endl;
+        }
+        else
+        {
+            temp << c.id << endl;
+            temp << c.name << endl;
+            temp << c.description << endl;
+        }
+    }
+    archivo.close();
+    temp.close();
+    remove("cities.txt");
+    rename("temp.txt", "cities.txt");
+}
+void deleteFile()
+{
+    ifstream archivo("cities.txt");
+    ofstream temp("temp.txt");
+    CITY c;
+    int id;
+    cout << "ID: ";
+    cin >> id;
+    while (archivo >> c.id)
+    {
+        archivo.ignore();
+        archivo.getline(c.name, 30);
+        archivo.getline(c.description, 100);
+        if (c.id != id)
+        {
+            temp << c.id << endl;
+            temp << c.name << endl;
+            temp << c.description << endl;
+        }
+    }
+    archivo.close();
+    temp.close();
+    remove("cities.txt");
+    rename("temp.txt", "cities.txt");
 }
